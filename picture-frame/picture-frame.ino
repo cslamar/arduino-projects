@@ -113,7 +113,7 @@ void loop(void) {
       previousSlide(currentMillis);
     } else if ( (p.y > 105) && (p.y < 211) ){
       paused = !paused;
-      Tft.drawString("Paused", 166, 100, 2, GREEN);
+//      Tft.drawString("Paused", 166, 100, 2, GREEN);
     }
   }
   
