@@ -61,6 +61,8 @@ int counter = 0;
 
 String *fileArray;
 
+bool paused = false;
+
 void setup(void) {
   Serial.begin(9600);
   Serial.print("Initializing SD card...");
@@ -73,8 +75,8 @@ void setup(void) {
 
   Tft.init();
   Tft.setDisplayDirect(UP2DOWN);
-  Tft.drawString("Loading...", 166, 100, 2, GREEN); //draw a char, start from point(8,166) font size 2(16*16)
-
+  Tft.drawString("Loading...", 166, 100, 2, GREEN);
+  
   root = SD.open("/");
 
   // Count the number of images
@@ -109,11 +111,14 @@ void loop(void) {
     } else if ( p.y < 105 ) {
       Serial.println("BACK!");
       previousSlide(currentMillis);
+    } else if ( (p.y > 105) && (p.y < 211) ){
+      paused = !paused;
+      Tft.drawString("Paused", 166, 100, 2, GREEN);
     }
   }
   
   // Default to next slide
-  if( currentMillis - previousMillis >= interval) {
+  if( (currentMillis - previousMillis >= interval) && (paused == false) ) {
       showNextSlide(currentMillis);
   }
 
