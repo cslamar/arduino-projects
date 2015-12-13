@@ -33,6 +33,7 @@
 #define TS_MINY 120
 #define TS_MAXY 940
 
+#define CS_PIN 53
 
 // For better pressure precision, we need to know the resistance
 // between X+ and X- Use any multimeter to read it
@@ -67,7 +68,7 @@ void setup(void) {
   Serial.begin(9600);
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(49)) { //49 is used as chip select pin
+  if (!SD.begin(CS_PIN)) { // chip select pin
       Serial.println("failed!");
       return;
   }
@@ -114,6 +115,7 @@ void loop(void) {
     } else if ( (p.y > 105) && (p.y < 211) ){
       paused = !paused;
 //      Tft.drawString("Paused", 166, 100, 2, GREEN);
+      Serial.println("Paused toggled");
     }
   }
   
